@@ -9,15 +9,9 @@ terraform {
 
 # Configuración del proveedor de AWS
 provider "aws" {
-  region = "us-east-1" # Cambia a la región donde están tus instancias EC2
-}
-
-# Configuración del proveedor de Datadog
-provider "datadog" {
-  api_key = var.datadog_api_key
-  app_key = var.datadog_app_key
-  # Configura la región de Datadog
-  api_url = "https://api.us5.datadoghq.com"
+  region     = var.aws_region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
 # Variables de entorno para las claves de Datadog
@@ -31,6 +25,17 @@ variable "datadog_app_key" {
   type        = string
 }
 
+# Variables de entorno para las claves de AWS
+variable "aws_access_key" {
+  description = "Access Key para AWS"
+  type        = string
+}
+
+variable "aws_secret_key" {
+  description = "Secret Key para AWS"
+  type        = string
+}
+
 # Política de IAM para permitir a Datadog acceder a CloudWatch
 resource "aws_iam_policy" "datadog_policy" {
   name        = "DatadogPolicy"
@@ -41,13 +46,24 @@ resource "aws_iam_policy" "datadog_policy" {
       {
         "Effect": "Allow",
         "Action": [
+          "ec2:DescribeInstances",
+          "ec2:DescribeImages",
+          "ec2:DescribeSecurityGroups",
+          "ec2:RunInstances",
+          "ec2:TerminateInstances",
+          "ec2:CreateTags",
+          "ec2:DeleteTags",
+          "iam:GetPolicy",
+          "iam:GetRole",
+          "iam:PassRole",
+          "s3:ListBucket",
+          "s3:GetObject",
+          "s3:PutObject",
           "cloudwatch:GetMetricData",
           "cloudwatch:ListMetrics",
-          "ec2:DescribeInstances",
           "logs:DescribeLogGroups",
           "logs:DescribeLogStreams",
           "logs:GetLogEvents",
-          "logs:FilterLogEvents",
           "tag:GetResources",
           "tag:GetTagKeys",
           "tag:GetTagValues"
@@ -63,39 +79,5 @@ data "aws_instances" "all" {
   filter {
     name   = "instance-state-name"
     values = ["running"]
-  }
-}
-
-# Crear un dashboard en Datadog
-resource "datadog_dashboard" "ec2_dashboard" {
-  title       = "EC2 Monitoring Dashboard"
-  description = "Dashboard para monitorizar instancias EC2"
-  layout_type = "ordered"
-
-  widget {
-    timeseries_definition {
-      title = "CPU Utilization"
-      request {
-        q = "avg:aws.ec2.cpuutilization{*} by {instance_id}"
-      }
-    }
-  }
-
-  widget {
-    timeseries_definition {
-      title = "Network In"
-      request {
-        q = "avg:aws.ec2.network_in{*} by {instance_id}"
-      }
-    }
-  }
-
-  widget {
-    timeseries_definition {
-      title = "Network Out"
-      request {
-        q = "avg:aws.ec2.network_out{*} by {instance_id}"
-      }
-    }
   }
 }

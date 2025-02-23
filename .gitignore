@@ -29,3 +29,7 @@ yarn-error.log*
 .vscode
 
 # .env
+
+# Archivos de Terraform con datos sensibles
+*.tfvars
+*.tfvars.json

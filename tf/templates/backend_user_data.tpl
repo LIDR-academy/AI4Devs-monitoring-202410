@@ -1,7 +1,7 @@
 #!/bin/bash
 export DD_AGENT_MAJOR_VERSION=7 
-export DD_API_KEY='76cd5e07d41cec7b205a01ffbc26c5ae'
-export DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+export DD_API_KEY='${datadog_api_key}'
+export DD_SITE="datadoghq.eu" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
 
 yum update -y
 yum install -y docker
@@ -21,4 +21,4 @@ docker build -t lti-backend .
 docker run -d -p 8080:8080 lti-backend
 
 # Timestamp to force update
-echo "Timestamp: ${timestamp}"
+echo "Timestamp: ${timestamp}" 
