@@ -30,5 +30,16 @@ remove_zip_if_exists "$BACKEND_ZIP"
 remove_zip_if_exists "$FRONTEND_ZIP"
 
 # Crear nuevos archivos zip para backend y frontend
-create_zip_if_dir_exists "backend" "$BACKEND_ZIP"
-create_zip_if_dir_exists "frontend" "$FRONTEND_ZIP"
+if [ -d "../backend" ]; then
+    echo "Creando backend.zip..."
+    zip -r ./backend.zip ../backend
+else
+    echo "Error: Directorio 'backend' no encontrado. Asegúrate de que el directorio exista."
+fi
+
+if [ -d "../frontend" ]; then
+    echo "Creando frontend.zip..."
+    zip -r ./frontend.zip ../frontend
+else
+    echo "Error: Directorio 'frontend' no encontrado. Asegúrate de que el directorio exista."
+fi
