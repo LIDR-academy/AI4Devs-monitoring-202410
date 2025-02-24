@@ -68,7 +68,7 @@ npm install
 ```
 cd backend
 npm run build
-````
+```
 4. Inicia el servidor backend:
 ```
 cd backend
@@ -160,4 +160,64 @@ POST http://localhost:3010/candidates
 }
 ```
 
+## Monitorización con Datadog
 
+### Configuración de Monitoreo
+
+Se ha implementado un sistema de monitorización utilizando Datadog para supervisar las instancias EC2 y la infraestructura AWS. La configuración incluye:
+
+#### 1. Configuración de Proveedores
+- Configuración del proveedor AWS (región us-east-1)
+- Configuración del proveedor Datadog con API y APP keys
+- Definición de variables para las claves de Datadog
+
+#### 2. Integración AWS-Datadog
+- Creación de política IAM (DatadogPolicy) para acceso a CloudWatch
+- Configuración del rol IAM para integración (DatadogAWSIntegrationRole)
+- Configuración de permisos para métricas y logs
+- Configuración de external_id para la integración segura
+
+#### 3. Roles y Políticas IAM
+- Creación de rol EC2 para instancias
+- Configuración de política S3 para acceso a buckets
+- Attachment de políticas a roles correspondientes
+
+#### 4. Monitoreo
+- Configuración de filtros para instancias EC2
+- Habilitación de métricas específicas (EC2, deshabilitado Lambda y RDS)
+- Configuración de tags para filtrado (env:prod)
+
+### Desafíos y Soluciones
+
+#### 1. Integración AWS-Datadog Existente
+**Desafío**: Error 409 Conflict al intentar crear una integración que ya existía
+**Solución**: Separación de la gestión de roles/políticas de la integración existente
+
+#### 2. Problemas de State
+**Desafío**: Desincronización entre el state local y la configuración real
+**Solución**: Limpieza del state y mantenimiento solo de recursos AWS
+
+#### 3. Dependencias Circulares
+**Desafío**: El rol IAM dependía de la integración y viceversa
+**Solución**: Reestructuración de dependencias, usando el external_id existente
+
+#### 4. Recursos Deprecados
+**Desafío**: Advertencia sobre uso de recurso datadog_integration_aws deprecado
+**Solución**: Adaptación del código para mantener solo los recursos AWS necesarios
+
+#### 5. Dashboards Duplicados
+**Desafío**: Creación duplicada de dashboards por conflictos en el state
+**Solución**: Limpieza de recursos duplicados del state
+
+### Arquitectura de Monitorización
+
+La solución implementada:
+1. Mantiene la integración AWS-Datadog existente
+2. Gestiona roles y políticas IAM necesarias
+3. Configura accesos y permisos de manera segura
+4. Permite la recolección de métricas de EC2
+
+### Capturas de Pantalla
+
+#### Dashboard de Métricas EC2
+![Dashboard EC2](./assets/images/dashboard-ec2.png)
