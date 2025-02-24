@@ -1,28 +1,15 @@
 resource "aws_s3_bucket" "code_bucket" {
-  bucket = "lti-project-code-bucket"
-  acl    = "private"
-}
+  bucket = "lti-project-code-bucket-${random_string.suffix.result}"
+  force_destroy = true
 
-resource "null_resource" "generate_zip" {
-  provisioner "local-exec" {
-    command = "sh ../generar-zip.sh"
-  }
-
-  triggers = {
-    always_run = "${timestamp()}"
+  tags = {
+    Name        = "LTI Project Code Bucket"
+    Environment = "Dev"
   }
 }
 
-resource "aws_s3_bucket_object" "backend_zip" {
-  bucket     = aws_s3_bucket.code_bucket.bucket
-  key        = "backend.zip"
-  source     = "../backend.zip"
-  depends_on = [null_resource.generate_zip]
-}
-
-resource "aws_s3_bucket_object" "frontend_zip" {
-  bucket     = aws_s3_bucket.code_bucket.bucket
-  key        = "frontend.zip"
-  source     = "../frontend.zip"
-  depends_on = [null_resource.generate_zip]
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+  upper   = false
 }
