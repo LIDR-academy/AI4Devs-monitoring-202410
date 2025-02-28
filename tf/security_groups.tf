@@ -1,5 +1,5 @@
 resource "aws_security_group" "backend_sg" {
-  name        = "lti-project-backend-sg"
+  name        = "lti-project-backend-sg-jlso"
   description = "Allow HTTP and SSH access"
 
   ingress {
@@ -25,7 +25,7 @@ resource "aws_security_group" "backend_sg" {
 }
 
 resource "aws_security_group" "frontend_sg" {
-  name        = "lti-project-frontend-sg"
+  name        = "lti-project-frontend-sg-jlso"
   description = "Allow HTTP and SSH access"
 
   ingress {

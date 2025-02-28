@@ -17,7 +17,7 @@ provider "datadog" {
   api_key = var.datadog_api_key
   app_key = var.datadog_app_key
   # Configura la región de Datadog
-  api_url = "https://api.us5.datadoghq.com"
+  api_url = "https://api.datadoghq.com"
 }
 
 # Variables de entorno para las claves de Datadog
@@ -33,14 +33,14 @@ variable "datadog_app_key" {
 
 # Política de IAM para permitir a Datadog acceder a CloudWatch
 resource "aws_iam_policy" "datadog_policy" {
-  name        = "DatadogPolicy"
+  name        = "DatadogPolicy-jlso"
   description = "Política para permitir a Datadog acceder a CloudWatch"
-  policy      = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Effect": "Allow",
-        "Action": [
+        "Effect" : "Allow",
+        "Action" : [
           "cloudwatch:GetMetricData",
           "cloudwatch:ListMetrics",
           "ec2:DescribeInstances",
@@ -52,7 +52,7 @@ resource "aws_iam_policy" "datadog_policy" {
           "tag:GetTagKeys",
           "tag:GetTagValues"
         ],
-        "Resource": "*"
+        "Resource" : "*"
       }
     ]
   })
