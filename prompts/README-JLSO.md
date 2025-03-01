@@ -231,6 +231,98 @@ resource "aws_s3_object" "backend_zip" {
    .env
    ```
 
+### 5. Problemas con la Configuración de Datadog
+
+**Problema**: Errores de declaración de variables duplicadas al integrar Datadog.
+
+**Prompt utilizado**:
+
+```
+i have these errors with the new configuration, some duplicate variable declarations. fix the errors
+```
+
+**Solución**: Se eliminaron las declaraciones duplicadas de variables en `main.tf` y se dejaron solo las definiciones en `variables.tf`:
+
+```terraform
+// Removing duplicate variable declarations as they are defined in variables.tf
+// variable "datadog_api_key" {
+//   description = "API Key para Datadog"
+//   type        = string
+// }
+```
+
+### 6. Problemas con la Recolección de Métricas de CPU
+
+**Problema**: Las métricas de CPU no aparecían en el dashboard de Datadog a pesar de que el agente estaba instalado y funcionando.
+
+**Prompt utilizado**:
+
+```
+Estoy ejecutando el comando `sudo datadog-agent status | grep -i "system\|core\|cpu\|collector"` y veo que el collector no está funcionando. ¿Qué podría estar causando este problema y cómo puedo solucionarlo?
+```
+
+**Solución**: Se identificó que el collector y el system probe no estaban funcionando. Se implementaron las siguientes correcciones:
+
+1. Se verificó y corrigió la configuración en `/etc/datadog-agent/datadog.yaml`:
+
+   ```yaml
+   collect_ec2_tags: true
+   system_probe_config:
+     enabled: true
+   ```
+
+2. Se creó un archivo de configuración específico para CPU:
+
+   ```yaml
+   # /etc/datadog-agent/conf.d/cpu.d/conf.yaml
+   init_config:
+
+   instances:
+     - {}
+   ```
+
+3. Se reiniciaron los servicios de Datadog:
+   ```bash
+   systemctl restart datadog-agent
+   systemctl restart datadog-agent-sysprobe
+   ```
+
+### 7. Problemas de Conectividad con Datadog
+
+**Problema**: Errores al intentar validar la conectividad con Datadog.
+
+**Prompt utilizado**:
+
+```
+Estoy intentando validar la conectividad con Datadog usando `curl -Is https://api.datadoghq.com/api/v1/validate | head -1` pero recibo un error 404. ¿Qué podría estar mal?
+```
+
+**Solución**: Se identificó que la URL de validación era incorrecta. Se corrigió utilizando el endpoint correcto:
+
+```bash
+curl -Is https://intake.datadoghq.com/api/v1/validate | head -1
+```
+
+### 8. Necesidad de Scripts de Diagnóstico y Pruebas
+
+**Problema**: Dificultad para diagnosticar problemas con el agente Datadog y verificar que las métricas se estaban recopilando correctamente.
+
+**Prompt utilizado**:
+
+```
+Necesito un script de diagnóstico completo que verifique todos los aspectos de la configuración de Datadog: instalación del agente, configuración, permisos, conectividad, etc. El script debe generar un informe detallado con los resultados.
+```
+
+**Solución**: Se crearon varios scripts para diagnóstico y pruebas:
+
+1. `validate_datadog_permissions.sh`: Verifica permisos y configuración del agente
+2. `datadog_diagnostics.sh`: Realiza un diagnóstico completo y genera un informe
+3. `stress_test.sh`: Genera carga en CPU para verificar la recolección de métricas
+4. `full_stress_test.sh`: Genera carga en CPU, memoria y disco
+5. `monitor_cpu.sh`: Monitorea el uso de CPU en tiempo real
+6. `upload_stress_tools.sh`: Sube las herramientas de prueba a las instancias EC2
+7. `remote_stress_test.sh`: Ejecuta pruebas de estrés remotamente
+
 ## Proceso de Despliegue
 
 Para desplegar esta infraestructura:
@@ -258,4 +350,9 @@ Para desplegar esta infraestructura:
 - Problemas con ACL del Bucket S3
 - Recursos obsoletos en el estado de Terraform
 - Manejo de información sensible
-- Se implementó un enfoque de primero hacer que lo que ya estaba configurado funcione, para luego empezar a configurar el monitoreo con datadog, el cual será el siguiente paso.
+- Configuración correcta del agente Datadog para recopilar métricas de CPU
+- Problemas de conectividad con la API de Datadog
+- Necesidad de scripts de diagnóstico y pruebas para verificar la configuración
+- Configuración de monitores y alertas efectivas
+- Optimización de la recopilación de métricas para reducir costos
+- Automatización de la respuesta a alertas comunes

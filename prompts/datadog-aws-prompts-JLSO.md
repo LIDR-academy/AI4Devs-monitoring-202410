@@ -166,3 +166,96 @@ explícame que estas haciendo en cada paso de la configuración
 ```
 i have these errors with the new configuration, some duplicate variable declarations. fix the errors
 ```
+
+### Configuración de Dashboards
+
+```
+Ahora necesito que me ayudes a configurar un dashboard en Datadog para monitorear las instancias EC2. El dashboard debe incluir:
+- Métricas de CPU (utilización, créditos)
+- Métricas de memoria
+- Métricas de red (tráfico entrante/saliente, paquetes)
+- Métricas de disco (lectura/escritura, uso)
+- Lista de las instancias con mayor uso de CPU
+```
+
+```
+Necesito agregar monitores para alertar sobre problemas potenciales en las instancias EC2. Por favor, configura monitores para:
+- Alta utilización de CPU (>80%)
+- Alta utilización de memoria (>85%)
+- Alto uso de disco (>85%)
+- Instancias EC2 no disponibles
+```
+
+### Configuración de Alertas
+
+```
+Quiero configurar notificaciones para las alertas. ¿Cómo puedo hacer que las alertas se envíen a un canal de Slack y a un correo electrónico?
+```
+
+```
+Necesito que las alertas incluyan información detallada sobre el problema, como la instancia afectada, la métrica que causó la alerta y posibles acciones a tomar. ¿Cómo puedo personalizar los mensajes de alerta?
+```
+
+### Pruebas de Monitoreo
+
+```
+Necesito una forma de probar que las métricas se están recopilando correctamente. ¿Puedes crear un script que genere carga en la CPU para verificar que las métricas se envían a Datadog?
+```
+
+```
+Quiero un script más completo que pueda generar carga en CPU, memoria y disco para probar todas las métricas. El script debe permitir especificar la duración e intensidad de la carga.
+```
+
+```
+Necesito un script para monitorear el uso de CPU en tiempo real mientras ejecuto las pruebas de carga. El script debe mostrar el uso de CPU, carga del sistema, uso de memoria y swap.
+```
+
+```
+Necesito un script para subir las herramientas de prueba de estrés a las instancias EC2. El script debe transferir los scripts a las instancias backend y frontend.
+```
+
+```
+Quiero un script que me permita ejecutar pruebas de estrés remotamente en las instancias EC2 sin tener que conectarme directamente a ellas. El script debe permitir especificar el tipo de instancia (backend, frontend, ambas), el tipo de prueba (CPU, memoria, disco, todas), la duración y la intensidad.
+```
+
+### Troubleshooting
+
+```
+¿Cómo puedo validar si Datadog tiene los permisos necesarios para acceder a los logs de CPU desde la consola de AWS de cada instancia EC2?
+```
+
+```
+Necesito un script de diagnóstico completo que verifique todos los aspectos de la configuración de Datadog: instalación del agente, configuración, permisos, conectividad, etc. El script debe generar un informe detallado con los resultados.
+```
+
+```
+Estoy ejecutando el comando `sudo datadog-agent status | grep -i "system\|core\|cpu\|collector"` y veo que el collector no está funcionando. ¿Qué podría estar causando este problema y cómo puedo solucionarlo?
+```
+
+```
+He ejecutado `sudo datadog-agent check cpu` y veo que el check está funcionando correctamente, pero no veo las métricas de CPU en el dashboard de Datadog. ¿Qué podría estar causando este problema?
+```
+
+```
+Estoy intentando validar la conectividad con Datadog usando `curl -Is https://api.datadoghq.com/api/v1/validate | head -1` pero recibo un error 404. ¿Qué podría estar mal?
+```
+
+### Optimización de Costos
+
+```
+¿Cómo puedo optimizar los costos de la integración de Datadog con AWS? ¿Hay alguna configuración que pueda ajustar para reducir los costos sin sacrificar la calidad del monitoreo?
+```
+
+```
+¿Qué métricas son las más importantes para monitorear en las instancias EC2? Quiero asegurarme de que estoy recopilando las métricas esenciales sin gastar recursos en métricas que no son críticas.
+```
+
+### Conclusiones y Próximos Pasos
+
+```
+Ahora que tengo la configuración básica de monitoreo con Datadog, ¿cuáles serían los próximos pasos para mejorar la observabilidad de mi infraestructura? ¿Qué otras integraciones o configuraciones recomiendas?
+```
+
+```
+¿Cómo puedo automatizar la respuesta a alertas comunes? Por ejemplo, si una instancia tiene alta utilización de CPU, ¿puedo configurar una acción automática para escalar horizontalmente?
+```
