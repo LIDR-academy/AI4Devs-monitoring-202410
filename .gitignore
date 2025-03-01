@@ -29,3 +29,22 @@ yarn-error.log*
 .vscode
 
 # .env
+.env
+
+# Archivos de estado de Terraform
+*.tfstate
+*.tfstate.*
+
+# Archivos de variables con información sensible
+*.tfvars
+*.tfvars.json
+
+# Archivos de registro
+crash.log
+crash.*.log
+
+# Archivos de override
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
