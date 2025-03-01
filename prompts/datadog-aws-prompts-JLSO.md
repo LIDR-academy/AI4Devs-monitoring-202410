@@ -152,90 +152,17 @@ terraform apply
 ### Integración de Datadog con AWS
 
 ```
-¿Cómo puedo integrar Datadog con mi infraestructura AWS gestionada por Terraform?
+@tf Eres un Site Reliability Engineer en infraestructura, tu especialidad es el area de monitorizacion y observabilidad. Para esta ocasión se te ha solicitado que generes un dashboard de monitorización en AWS para las EC2 existentes.
+
+Objetivos de la configuración:
+- Configurar la integración de Datadog con AWS usando Terraform.
+- Instalar el agente Datadog en la instancia EC2.
+- Crear un dashboard en Datadog para visualizar métricas clave de AWS.
+
+Utiliza la estructura que ya está configurada de terraform, como base, y extiende la configuración con los nuevos requerimientos solicitados
+explícame que estas haciendo en cada paso de la configuración
 ```
 
-Este prompt me ayudó a entender cómo configurar la integración entre Datadog y AWS utilizando Terraform, incluyendo la creación de políticas IAM necesarias y la configuración del agente Datadog.
-
 ```
-¿Qué permisos necesita Datadog para monitorear mis recursos AWS?
+i have these errors with the new configuration, some duplicate variable declarations. fix the errors
 ```
-
-Este prompt me permitió identificar los permisos específicos que Datadog necesita para acceder a métricas de CloudWatch, logs y otros recursos de AWS.
-
-### Configuración de Dashboards
-
-```
-¿Cómo puedo crear un dashboard en Datadog para monitorear mis instancias EC2 usando Terraform?
-```
-
-Este prompt me guió en la creación de dashboards de Datadog utilizando Terraform, incluyendo la configuración de widgets para métricas como CPU, memoria y red.
-
-```
-¿Qué métricas son importantes monitorear para aplicaciones en contenedores Docker?
-```
-
-Este prompt me ayudó a identificar las métricas clave para monitorear aplicaciones en contenedores Docker, como uso de CPU, memoria, E/S de disco y red.
-
-### Configuración de Alertas
-
-```
-¿Cómo puedo configurar alertas en Datadog para notificarme cuando el uso de CPU supere cierto umbral?
-```
-
-Este prompt me mostró cómo configurar alertas basadas en umbrales para métricas críticas como el uso de CPU.
-
-```
-¿Cuáles son las mejores prácticas para configurar alertas y evitar falsos positivos?
-```
-
-Este prompt me proporcionó información sobre las mejores prácticas para configurar alertas efectivas, incluyendo la configuración de umbrales adecuados y períodos de evaluación.
-
-### Pruebas de Monitoreo
-
-```
-¿Cómo puedo probar que mis alertas de Datadog funcionan correctamente?
-```
-
-Este prompt me ayudó a entender cómo probar las alertas configuradas para asegurarme de que funcionan como se espera.
-
-```
-¿Cómo puedo simular una carga alta en mis instancias EC2 para probar las alertas?
-```
-
-Este prompt me proporcionó métodos para generar carga artificial en instancias EC2 y probar las alertas de Datadog.
-
-### Optimización de Costos
-
-```
-¿Cómo puedo optimizar los costos de Datadog mientras mantengo un monitoreo efectivo?
-```
-
-Este prompt me ayudó a entender estrategias para optimizar los costos de Datadog, como ajustar la frecuencia de recopilación de métricas y filtrar logs innecesarios.
-
-### Troubleshooting
-
-```
-El agente de Datadog no está enviando métricas desde mis instancias EC2, ¿cómo puedo solucionar este problema?
-```
-
-Este prompt me guió en la resolución de problemas comunes con el agente de Datadog, incluyendo verificación de conectividad, permisos y configuración.
-
-## Conclusiones y Próximos Pasos
-
-La configuración de Terraform con AWS y Datadog ha sido un proceso de aprendizaje valioso que ha requerido superar varios desafíos técnicos. Los principales aprendizajes incluyen:
-
-1. **Infraestructura como código**: La importancia de gestionar la infraestructura utilizando herramientas como Terraform para garantizar la reproducibilidad y consistencia.
-
-2. **Monitoreo proactivo**: La configuración de Datadog nos permite detectar problemas antes de que afecten a los usuarios finales.
-
-3. **Seguridad**: La implementación de prácticas seguras para el manejo de credenciales y secretos es fundamental.
-
-4. **Documentación**: Documentar los procesos, desafíos y soluciones facilita el mantenimiento futuro y la transferencia de conocimiento.
-
-### Próximos Pasos
-
-1. Implementar monitoreo más detallado a nivel de aplicación
-2. Configurar alertas adicionales para otros componentes críticos
-3. Explorar funcionalidades avanzadas de Datadog como APM (Application Performance Monitoring)
-4. Automatizar más aspectos de la configuración de monitoreo
